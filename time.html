@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Calculator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Tính thời gian về</h2>
+        <form id="timeForm" class="mt-4">
+            <div class="form-group">
+                <label for="timeInput">Nhập thời gian checkin (hh:mm):</label>
+                <input type="text" class="form-control" id="timeInput" placeholder="VD: 08:30">
+            </div>
+            <button type="submit" class="btn btn-primary">Tính thời gian mới</button>
+        </form>
+        <div class="mt-4">
+            <h4>Bạn được về lúc:</h4>
+            <p id="resultTime" class="font-weight-bold"></p>
+        </div>
+    </div>
+
+    <script>
+        function addTime(timeString, hoursToAdd, minutesToAdd) {
+            const [hours, minutes] = timeString.split(':').map(Number);
+            const date = new Date();
+            date.setHours(hours);
+            date.setMinutes(minutes);
+            date.setSeconds(0);
+            date.setMilliseconds(0);
+
+            date.setHours(date.getHours() + hoursToAdd);
+            date.setMinutes(date.getMinutes() + minutesToAdd);
+
+            const newHours = date.getHours().toString().padStart(2, '0');
+            const newMinutes = date.getMinutes().toString().padStart(2, '0');
+
+            return `${newHours}:${newMinutes}`;
+        }
+
+        document.getElementById('timeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const timeInput = document.getElementById('timeInput').value;
+            const resultTime = addTime(timeInput, 9, 15); // Cộng 9 tiếng 15 phút
+            document.getElementById('resultTime').textContent = resultTime;
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
